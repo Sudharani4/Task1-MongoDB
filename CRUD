@@ -1,0 +1,54 @@
+from pymongo import MongoClient
+
+client = MongoClient("mongodb+srv://sudharani:sudharani@cluster0.mb7lier.mongodb.net/test")
+
+client.list_database_names()
+
+from pymongo import MongoClient
+client = MongoClient("mongodb+srv://sudharani:sudharani@cluster0.mb7lier.mongodb.net/test")
+db = client['stud']
+my_col = db['marks']
+client.list_database_names()
+my_col.insert_one({'name':'sudha','phone_number':9050,'place':'hyd'})
+client.list_database_names()
+
+data = [{'name':'sudha','phone_number':9050,'place':'hyd'},
+        {'name':'radha','phone_number':40890,'place':'vnk'},
+        {'name':'radhika','phone_number':5050,'place':'cnv'}]                  
+my_col.insert_many(data)
+my_col.find_one()
+
+my_col.find_one()
+
+for i in my_col.find({'phone_number':40890}):
+   print(i)
+
+for i in my_col.find({'phone_number':40890},{'_id':0,'name':1,'place':1}):
+   print(i)
+
+for i in my_col.find():
+   print(i)
+
+Q = {"name":"radhika"}
+new = {"$set":{"place":"vijay"}}
+my_col.update_one(Q , new)
+
+for i in my_col.find({"name" : "radhika"}):
+   print(i)
+
+Query = {"name":"radhika"}
+new = {"$set":{"place":"vijay"}}
+my_col.update_many(Query , new)
+
+for i in my_col.find({"name" : "radhika"}):
+   print(i)
+
+my_col.delete_one({'name' : 'radhika'})
+
+for i in my_col.find({"name" : "radhika"}):
+   print(i)
+
+my_col.delete_many({'name' : 'radhika'})
+
+for i in my_col.find():
+   print(i)
